@@ -11,7 +11,8 @@ const {
   getImagesGallary,
   getFolderGallary,
   uploadVideo,
-  getVideos
+  getVideos,
+  deleteVideo
 } = require('../controllers/galleryController')
 
 const router = express.Router()
@@ -31,8 +32,9 @@ router.get('/banner-images', getBannerImages)
 router.get('/image-gallery/:folder_id',  getImagesGallary)
 router.get('/folder-gallery', getFolderGallary)
 
-router.post('/video',uploadVideo)
+router.post('/video', uploadVideo)
 router.get('/video', getVideos)
+router.delete('/video/:id', deleteVideo)
 
 
 

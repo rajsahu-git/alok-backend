@@ -11,7 +11,10 @@ connectDB()
 const app = express()
 
 app.use(cors({ origin: ['http://localhost:3000','https://alok-school.vercel.app'] })) 
-app.use(express.json())
+app.use((req, res, next) => {
+  if (req.headers['content-type']?.includes('multipart/form-data')) return next()
+  express.json()(req, res, next)
+})
 app.use(passport.initialize())
 require('./src/controllers/authController')
 // Routes
@@ -21,6 +24,14 @@ app.use('/api/upload', require('./src/routes/uploadRoutes'))
 app.use('/api/gallery', require('./src/routes/galleryRoutes'))
 app.use('/api/blog', require('./src/routes/blogRoutes'))
 app.use('/api/alumni', require('./src/routes/alumani'))
+app.use('/api/team', require('./src/routes/teamRoutes'))
+app.use('/api/admission', require('./src/routes/admissionRoutes'))
+app.use('/api/tc', require('./src/routes/tcRoutes'))
+app.use('/api/alumni-form', require('./src/routes/alumniFormRoutes'))
+app.use('/api/career', require('./src/routes/careerRoutes'))
+app.use('/api/achievement', require('./src/routes/achievementRoutes'))
+app.use('/api/exam-notice', require('./src/routes/examNoticeRoutes'))
+app.use('/api/achievement', require('./src/routes/achievementRoutes'))
 
 
 

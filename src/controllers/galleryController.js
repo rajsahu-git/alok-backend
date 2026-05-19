@@ -175,6 +175,17 @@ const getVideos = async (req, res) => {
   }
 }
 
+const deleteVideo = async (req, res) => {
+  try {
+    const video = await GalleryVideo.findById(req.params.id)
+    if (!video) return res.status(404).json({ message: 'Video not found' })
+    await GalleryVideo.findByIdAndDelete(req.params.id)
+    res.json({ message: 'Video deleted successfully' })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+
 module.exports = {
   createGalleryFolder,
   getGalleryFolders,
@@ -186,5 +197,6 @@ module.exports = {
   getImagesGallary,
   getFolderGallary,
   uploadVideo,
-  getVideos
+  getVideos,
+  deleteVideo
 }

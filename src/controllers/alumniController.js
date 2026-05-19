@@ -9,7 +9,7 @@ const createAlumni = async (req, res) => {
       return res.status(400).json({ message: 'name, batch and currentPosition are required' })
     if (!req.file) return res.status(400).json({ message: 'image is required' })
 
-    const uploaded = await uploadToDrive(req.file)
+    const uploaded = await uploadToDrive(req.file,'1pP1LTgVPHqaY-9O9jRHzh03FoHuwT9Xt')
     const newAlumni = await Alumni.create({
       name: name.trim(),
       batch: batch.trim(),
@@ -41,7 +41,7 @@ const deleteAlumni = async (req, res) => {
   try {
     const alumni = await Alumni.findById(req.params.id)
     if (!alumni) return res.status(404).json({ message: 'Alumni not found' })
-    await deleteFromDrive(alumni.image)
+    await deleteFromDrive(alumni.image.fileId)
     await Alumni.findByIdAndDelete(req.params.id)
     res.status(200).json({ message: 'Alumni deleted successfully' })
   } catch (error) {
@@ -63,8 +63,8 @@ const updateAlumni = async (req, res) => {
     if (github) updateData.github = github
     if (twitter) updateData.twitter = twitter
     if (req.file) {
-      await deleteFromDrive(alumni.image)
-      const uploaded = await uploadToDrive(req.file)
+      await deleteFromDrive(alumni.image.fileId)
+      const uploaded = await uploadToDrive(req.file ,'1pP1LTgVPHqaY-9O9jRHzh03FoHuwT9Xt')
       updateData.image = uploaded
     }
     const updatedAlumni = await Alumni.findByIdAndUpdate(req.params.id, updateData, { new: true })
