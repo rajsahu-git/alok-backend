@@ -30,8 +30,10 @@ app.use('/api/tc', require('./src/routes/tcRoutes'))
 app.use('/api/alumni-form', require('./src/routes/alumniFormRoutes'))
 app.use('/api/career', require('./src/routes/careerRoutes'))
 app.use('/api/achievement', require('./src/routes/achievementRoutes'))
+app.use('/api/popup', require('./src/routes/popupRoutes'))
+app.use('/api/notice', require('./src/routes/noticeRoutes'))
 app.use('/api/exam-notice', require('./src/routes/examNoticeRoutes'))
-app.use('/api/achievement', require('./src/routes/achievementRoutes'))
+app.use('/api/result', require('./src/routes/resultRoutes'))
 
 
 
