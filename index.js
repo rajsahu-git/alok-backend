@@ -34,7 +34,7 @@ app.use('/api/popup', require('./src/routes/popupRoutes'))
 app.use('/api/notice', require('./src/routes/noticeRoutes'))
 app.use('/api/exam-notice', require('./src/routes/examNoticeRoutes'))
 app.use('/api/result', require('./src/routes/resultRoutes'))
-
+app.use('/api/allowed-users', require('./src/routes/userAcessRoutes'))
 
 
 

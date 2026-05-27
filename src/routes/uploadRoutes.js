@@ -1,7 +1,7 @@
 const express = require('express')
 const { google } = require('googleapis')
 const upload = require('../upload/multer')
-const protect = require('../middleware/authMiddleware')
+const { protect } = require('../middleware/authMiddleware')
 const {
   createDriveFolder, getDriveFolders, getFilesInFolder,
   uploadSingle, uploadMultiple, deleteFile,

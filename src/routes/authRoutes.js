@@ -1,6 +1,6 @@
 const express = require('express')
 const passport = require('passport')
-const protect = require('../middleware/authMiddleware')
+const { protect } = require('../middleware/authMiddleware')
 const { googleLogin, googleCallback, authFailure, getMe } = require('../controllers/authController')
 
 // Initialize passport (no session needed)

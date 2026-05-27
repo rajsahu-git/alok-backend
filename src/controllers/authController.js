@@ -2,6 +2,7 @@ const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
+const AllowedUser = require('../models/userAcess')
 
 // Configure Google Strategy
 passport.use(new GoogleStrategy({
@@ -11,21 +12,28 @@ passport.use(new GoogleStrategy({
   proxy: true,
 }, async (accessToken, refreshToken, profile, done) => {
   try {
+    const email = profile.emails[0].value
+    console.log(email)
+    // Check if this email is in the allowed list
+    const allowed = await AllowedUser.findOne({ email, isActive: true })
+    if (!allowed) return done(null, false, { message: 'Access denied. Contact admin.' })
+
     let user = await User.findOne({ googleId: profile.id })
 
     if (!user) {
-      // Check if email already exists (manual signup before)
-      user = await User.findOne({ email: profile.emails[0].value })
+      user = await User.findOne({ email })
       if (user) {
         user.googleId = profile.id
         user.avatar = profile.photos[0]?.value
+        user.role = allowed.role
         await user.save()
       } else {
         user = await User.create({
           googleId: profile.id,
           name: profile.displayName,
-          email: profile.emails[0].value,
+          email,
           avatar: profile.photos[0]?.value,
+          role: allowed.role,
         })
       }
     }
@@ -53,7 +61,7 @@ const googleCallback = [
 ]
 
 // GET /api/auth/failure
-const authFailure = (req, res) => res.status(401).json({ message: 'Google authentication failed' })
+const authFailure = (req, res) => res.redirect(`${process.env.FRONTEND_URL}/auth/failure?message=Google authentication failed`);
 
 // GET /api/auth/me  (protected)
 const getMe = async (req, res) => {
