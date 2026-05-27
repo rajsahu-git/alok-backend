@@ -8,7 +8,7 @@ const GalleryVideo = require('../models/Video')
 // POST /api/gallery/folder
 const createGalleryFolder = async (req, res) => {
   try {
-    const { name, userId } = req.body
+    const { name, userId, order } = req.body
     if (!name?.trim()) return res.status(400).json({ message: 'Folder name is required' })
 
     const driveFolder = await createFolder(name.trim())
@@ -18,6 +18,7 @@ const createGalleryFolder = async (req, res) => {
       driveId: driveFolder.folderId,
       viewLink: driveFolder.viewLink,
       createdBy: userId || null,
+      order: order || 0,
     })
 
     res.status(201).json({ message: 'Folder created successfully', folder })
@@ -31,7 +32,7 @@ const getGalleryFolders = async (req, res) => {
   try {
     const folders = await GalleryFolder.find()
       .populate('createdBy', 'name email')
-      .sort({ createdAt: -1 })
+      .sort({ order: -1, createdAt: -1 })
 
     res.json({ count: folders.length, folders })
   } catch (err) {
@@ -135,7 +136,7 @@ const getFolderGallary = async (req, res) => {
   try {
     const folders = await GalleryFolder.find()
       .populate('createdBy', 'name email')
-      .sort({ createdAt: -1 })
+      .sort({ order: -1, createdAt: -1 })
 
     const foldersWithCover = await Promise.all(
       folders.map(async (folder) => {
