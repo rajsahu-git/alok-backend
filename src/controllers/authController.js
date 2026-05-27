@@ -13,29 +13,29 @@ passport.use(new GoogleStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     const email = profile.emails[0].value
-    console.log(email)
-    // Check if this email is in the allowed list
-    const allowed = await AllowedUser.findOne({ email, isActive: true })
+
+    // Check if user already exists in DB
+    let user = await User.findOne({ email })
+
+    const isSuperAdmin = user?.role === 'superadmin'
+
+    // Check allowlist unless superadmin
+    const allowed = isSuperAdmin ? { role: 'superadmin' } : await AllowedUser.findOne({ email, isActive: true })
     if (!allowed) return done(null, false, { message: 'Access denied. Contact admin.' })
 
-    let user = await User.findOne({ googleId: profile.id })
-
     if (!user) {
-      user = await User.findOne({ email })
-      if (user) {
-        user.googleId = profile.id
-        user.avatar = profile.photos[0]?.value
-        user.role = allowed.role
-        await user.save()
-      } else {
-        user = await User.create({
-          googleId: profile.id,
-          name: profile.displayName,
-          email,
-          avatar: profile.photos[0]?.value,
-          role: allowed.role,
-        })
-      }
+      user = await User.create({
+        googleId: profile.id,
+        name: profile.displayName,
+        email,
+        avatar: profile.photos[0]?.value,
+        role: allowed.role,
+      })
+    } else {
+      user.googleId = profile.id
+      user.avatar = profile.photos[0]?.value
+      if (!isSuperAdmin) user.role = allowed.role
+      await user.save()
     }
 
     done(null, user)
