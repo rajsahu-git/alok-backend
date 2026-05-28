@@ -14,12 +14,12 @@ const createNotice = async (req, res) => {
     }
 
     if (req.files?.image?.[0]) {
-      const uploaded = await uploadToDrive(req.files.image[0])
+      const uploaded = await uploadToDrive(req.files.image[0],"1y-5mczDB8AAQTLICrzKbYzWuhffchNJa")
       noticeData.image = { fileId: uploaded.fileId, viewLink: uploaded.viewLink, directLink: uploaded.directLink }
     }
 
     if (req.files?.pdf?.[0]) {
-      const uploaded = await uploadToDrive(req.files.pdf[0])
+      const uploaded = await uploadToDrive(req.files.pdf[0], "1y-5mczDB8AAQTLICrzKbYzWuhffchNJa")
       noticeData.pdf = { fileId: uploaded.fileId, fileName: uploaded.fileName, viewLink: uploaded.viewLink, directLink: uploaded.directLink }
     }
 
@@ -71,13 +71,13 @@ const updateNotice = async (req, res) => {
 
     if (req.files?.image?.[0]) {
       if (notice.image?.fileId) await deleteFromDrive(notice.image.fileId)
-      const uploaded = await uploadToDrive(req.files.image[0])
+      const uploaded = await uploadToDrive(req.files.image[0], "1y-5mczDB8AAQTLICrzKbYzWuhffchNJa")
       updateData.image = { fileId: uploaded.fileId, viewLink: uploaded.viewLink, directLink: uploaded.directLink }
     }
 
     if (req.files?.pdf?.[0]) {
       if (notice.pdf?.fileId) await deleteFromDrive(notice.pdf.fileId)
-      const uploaded = await uploadToDrive(req.files.pdf[0])
+      const uploaded = await uploadToDrive(req.files.pdf[0], "1y-5mczDB8AAQTLICrzKbYzWuhffchNJa")
       updateData.pdf = { fileId: uploaded.fileId, fileName: uploaded.fileName, viewLink: uploaded.viewLink, directLink: uploaded.directLink }
     }
 
