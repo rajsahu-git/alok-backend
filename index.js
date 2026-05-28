@@ -37,6 +37,7 @@ app.use('/api/result', require('./src/routes/resultRoutes'))
 app.use('/api/allowed-users', require('./src/routes/userAcessRoutes'))
 app.use('/api/contact', require('./src/routes/contactRoutes'))
 app.use('/api/question-bank', require('./src/routes/questionBankRoute'))
+app.use('/api/articles', require('./src/routes/articleRoutes'))
 
 
 app.get('/', (req, res) => res.send('School API running 🚀'))
