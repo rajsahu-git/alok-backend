@@ -6,7 +6,7 @@ const createTC = async (req, res) => {
   try {
     const { scholarNumber, name, fatherName, dob, lastClass } = req.body
 
-    if (!scholarNumber?.trim() || !name?.trim() || !fatherName?.trim() || !dob || !lastClass?.trim())
+    if (!scholarNumber?.trim() )
       return res.status(400).json({ message: 'scholarNumber, name, fatherName, dob and lastClass are required' })
     if (!req.file) return res.status(400).json({ message: 'TC file is required' })
 
