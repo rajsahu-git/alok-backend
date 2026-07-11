@@ -8,7 +8,7 @@ const alumniSchema = new mongoose.Schema(
       viewLink: { type: String, required: true },
         directLink: { type: String, required: true },
     },
-    batch: { type: String, required: true },
+    batch: { type: String, required: false },
     currentPosition: { type: String, required: true },
     linkedin: { type: String },
     github: { type: String },

@@ -5,7 +5,7 @@ const { uploadToDrive, deleteFromDrive } = require('../upload/googleDrive')
 const createAlumni = async (req, res) => {
   try {
     const { name, batch, currentPosition, linkedin, github, twitter } = req.body
-    if (!name?.trim() || !batch?.trim() || !currentPosition?.trim())
+    if (!name?.trim()  || !currentPosition?.trim())
       return res.status(400).json({ message: 'name, batch and currentPosition are required' })
     if (!req.file) return res.status(400).json({ message: 'image is required' })
 
