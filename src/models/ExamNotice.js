@@ -5,12 +5,17 @@ const examNoticeSchema = new mongoose.Schema(
     title: { type: String, required: true, trim: true },
     examDateFrom: { type: Date, required: true },
     examDateTo: { type: Date, required: true },
-    description: { type: String, required: true, trim: true },
+    description: { type: String, trim: true },
     pdf: {
-      fileId: { type: String, required: true },
-      fileName: { type: String, required: true },
-      viewLink: { type: String, required: true },
-      directLink: { type: String, required: true },
+      fileId: String,
+      fileName: String,
+      viewLink: String,
+      directLink: String,
+    },
+    image: {
+      fileId: String,
+      viewLink: String,
+      directLink: String,
     },
   },
   { timestamps: true, collection: 'exam_notices' }
