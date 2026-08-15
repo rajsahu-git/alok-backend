@@ -63,7 +63,7 @@ router.get('/folder/:folderId/files', getFilesInFolder)
 
 // General upload routes
 router.post('/single', upload.single('image'), uploadSingle)
-router.post('/multiple', upload.array('images', 10), uploadMultiple)
+router.post('/multiple', upload.array('images', 30), uploadMultiple)
 
 // Banner routes
 router.post('/banner', protect, adminOnly, upload.single('image'), uploadBanner)

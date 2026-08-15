@@ -24,7 +24,7 @@ router.delete('/folder/:id', deleteGalleryFolder)
 
 // Image routes
 router.get('/folder/:id/images', getImagesInFolder)
-router.post('/folder/:id/images', upload.array('images', 20), uploadImagesToFolder)
+router.post('/folder/:id/images', upload.array('images', 50), uploadImagesToFolder)
 router.delete('/image/:fileId', deleteGalleryImage)
 
 router.get('/banner-images', getBannerImages)
