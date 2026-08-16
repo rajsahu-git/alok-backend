@@ -10,7 +10,7 @@ connectDB()
 
 const app = express()
 
-app.use(cors({ origin: ['http://localhost:3000','https://alok-school.vercel.app'] })) 
+app.use(cors({ origin: ['http://localhost:3000','https://alok-school.vercel.app','https://rajsamand.alokschool.org'] }))
 app.use((req, res, next) => {
   if (req.headers['content-type']?.includes('multipart/form-data')) return next()
   express.json()(req, res, next)
